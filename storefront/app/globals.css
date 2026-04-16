@@ -4,35 +4,36 @@
 
 @layer base {
   :root {
-    --background: 40 20% 98%;
-    --foreground: 0 0% 10%;
-    --muted: 40 10% 94%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 35 40% 50%;
-    --accent-foreground: 0 0% 100%;
-    --border: 40 10% 88%;
-    --ring: 35 40% 50%;
-    --primary: 0 0% 10%;
+    /* ZC Fashion — Black, White, Warm Neutral palette */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 48%;
+    --accent: 36 18% 72%;
+    --accent-foreground: 0 0% 7%;
+    --border: 0 0% 90%;
+    --ring: 0 0% 7%;
+    --primary: 0 0% 7%;
     --primary-foreground: 0 0% 98%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
-    /* Brand colors (dynamically injected from Store.metadata.brand) */
-    /* Access in CSS: var(--brand-primary), var(--brand-secondary) */
-    /* Managed by BrandStyleInjector component */
+    /* Brand overrides */
+    --brand-primary: #111111;
+    --brand-secondary: #c9b99a;
   }
 
   .dark {
-    --background: 0 0% 6%;
-    --foreground: 40 20% 94%;
+    --background: 0 0% 7%;
+    --foreground: 0 0% 96%;
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 55%;
-    --accent: 35 45% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 36 18% 65%;
+    --accent-foreground: 0 0% 7%;
     --border: 0 0% 16%;
-    --ring: 35 45% 55%;
-    --primary: 40 20% 94%;
-    --primary-foreground: 0 0% 6%;
+    --ring: 36 18% 65%;
+    --primary: 0 0% 96%;
+    --primary-foreground: 0 0% 7%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
   }
@@ -72,13 +73,13 @@
     @apply w-full;
   }
 
-  /* Brand color utilities - uses colors from Store.metadata.brand */
+  /* Brand color utilities */
   .btn-brand-primary {
     background-color: var(--brand-primary, hsl(var(--primary)));
     color: white;
   }
   .btn-brand-primary:hover {
-    opacity: 0.9;
+    opacity: 0.88;
   }
 
   .text-brand-primary {
@@ -100,6 +101,31 @@
   .bg-brand-secondary {
     background-color: var(--brand-secondary, hsl(var(--accent)));
   }
+
+  /* ZC Fashion specific utilities */
+  .zc-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-[#111111] text-white px-8 py-4 text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-200 hover:bg-[#333] active:scale-[0.98];
+  }
+
+  .zc-btn-outline {
+    @apply inline-flex items-center justify-center gap-2 border border-[#111111] text-[#111111] px-8 py-4 text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-200 hover:bg-[#111111] hover:text-white active:scale-[0.98];
+  }
+
+  .zc-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 text-[#111111] px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-200 hover:opacity-60;
+  }
+
+  .zc-label {
+    @apply text-[10px] font-semibold uppercase tracking-[0.22em] text-[#9a9a9a];
+  }
+
+  .zc-section-title {
+    @apply text-[2.2rem] sm:text-[3rem] font-heading font-bold tracking-[-0.03em] leading-[1.05];
+  }
+
+  .zc-divider {
+    @apply w-10 h-[2px] bg-[#111111];
+  }
 }
 
 /* Smooth scrolling */
@@ -107,9 +133,26 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
 /* Selection color */
 ::selection {
-  @apply bg-accent/20 text-foreground;
+  background: #111111;
+  color: white;
 }
 
 /* Focus styles */
@@ -117,18 +160,54 @@ html {
   @apply outline-2 outline-offset-2 outline-ring;
 }
 
-/* Cookie consent animation */
+/* Animations */
 @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-slow {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .animate-fade-in {
-  animation: fade-in 0.3s ease-out;
+  animation: fade-in 0.5s ease-out forwards;
 }
+
+.animate-fade-in-up {
+  animation: fade-in-slow 0.7s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+/* Stagger children */
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 80ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 160ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 240ms; }
